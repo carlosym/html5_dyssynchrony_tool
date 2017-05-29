@@ -1,0 +1,95 @@
+
+html,body{
+    width: 100%;
+    height:100%;
+}
+#Videos{
+    height:100%;
+    width:35%;
+    float:left;
+}
+#Videos a{
+    float:left;
+}
+#Videos input{
+    width:83%;
+}
+#lv, #rv{
+    height:100%;
+    width:20%;
+    float:left;
+}
+#appointments{
+    height:100%;
+    width:25%;
+    float:left;
+    overflow-y: scroll;
+}
+#appointments input{
+    padding-top: 5px;
+    padding-bottom: 15px;
+}
+#appointments a, #appointments span, #appointments input[type="checkbox"]{
+    float:left;
+}
+#appointments span:not(#s):not(#Parameter):not(#LongParameter):not(#inputParameter):not(#tags) {
+    padding-top: 5px;
+    width:16%; 
+}
+#s {
+    padding-top: 5px;
+    width:3%;
+}
+#appointments div {
+    width:100%;
+    float:left;
+}
+#appointments select {
+    width:50%;
+    float:left;
+}
+#tags {
+    color: white;
+    width: 50%;
+}
+#appointments a:not(:last-child), #Parameter {
+    width:25%;
+    margin-bottom: 10px;
+    margin-right: 5%;
+}
+#appointments input[type="checkbox"]{
+    margin-top: 10px;
+    margin-left: 20px;
+}
+#LongParameter {
+    padding-top: 5px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 5%;
+}
+#Parameter {
+    padding-top: 7px;
+    padding-left: 10px;
+}
+#inputParameter {
+    padding-top: 7px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    margin-right: 5%;
+    width: 15%;
+}
+#lv div, #rv div {
+    height:33%;
+}
+#export{
+    width: 100%;
+}
+#header{
+    height: 35px;
+    color: white;
+}
+#inputPanel input{
+    width: 25%;
+    float: left;
+    padding-top: 15px;
+}

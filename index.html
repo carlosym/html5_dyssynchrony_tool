@@ -1,0 +1,879 @@
+<!DOCTYPE HTML>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="libs/cornerstone.css">
+    <link rel="stylesheet" href="libs/bootstrap.min.css">
+    <link rel="stylesheet" href="libs/cornerstone.min.css">
+    <!-- support for mobile touch devices -->
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+
+<body>
+    <div id="Videos">
+        <div id="Apicalview-4Chambers" style="height:45%"></div>
+        <div id="video1Menu" style="height:5%">
+            <a href="#" class="btn btn-default btn-sm" id="playClip1">Play</a>
+            <a href="#" class="btn btn-default btn-sm" id="stopClip1">Stop</a>
+            <input type="range" id="slice-range1">
+        </div>
+        <div id="Shortaxis" style="height:45%"></div>
+        <div id="video2Menu" style="height:5%">
+            <a href="#" class="btn btn-default btn-sm" id="playClip2">Play</a>
+            <a href="#" class="btn btn-default btn-sm" id="stopClip2">Stop</a>
+            <input type="range" id="slice-range2">
+        </div>
+    </div>
+    <div id="lv">
+        <div id="Aorticvalve"></div>
+        <div id="Mitralvalve-PWDoppler"></div>
+        <div id="Mitralvalve-CWDoppler"></div>
+    </div>
+    <div id="rv">
+        <div id="Pulmonaryvalve"></div>
+        <div id="Tricuspid-PWDoppler"></div>
+        <div id="Tricuspid-CWDoppler"></div>
+    </div>
+    <div id="appointments">
+        <div><input type="file" id="selectFile" multiple></div>
+        <div class="panel panel-default">
+            <div class="panel-heading" id="header">Atrium - Atrium dyssynchrony</div>
+            <div>
+                <span id="LongParameter" >Tricuspid mitral difference:</span><span id="TMDvalue"></span><span id="s">s</span>
+            </div>
+        </div>
+        <div class="panel panel-default" id="Checkboxes">
+            <div class="panel-heading" id="header">Atrium - Ventricle dyssynchrony</div>
+            <div>
+                <span id="LongParameter" style="margin-top:7px">Pattern of mitral filling:</span>
+                <select class="form-control" id="MitralFillingSelect">
+                    <option value="Normal">Normal</option>
+                    <option value="Long AV">Long AV</option>
+                    <option value="Short AV">Short AV</option>
+                </select>
+                <div class="CheckBoxContainer CheckBoxContainerLong" style="display:none">
+                    <input type="checkbox" id="FEA"><span id="LongParameter">Fused E-A</span>
+                    <input type="checkbox" id="NFEA"><span id="LongParameter">Non-fused E-A</span>
+                </div>
+                <div class="CheckBoxContainer CheckBoxContainerLong" style="display:none">
+                    <input type="checkbox" id="PSMR"><span id="LongParameter">Pre-systolic MR</span>
+                </div>
+                <div class="CheckBoxContainer CheckBoxContainerShort" style="display:none">
+                    <input type="checkbox" id="TAW"><span id="LongParameter">Truncated A wave</span>
+                    <input type="checkbox" id="A-A"><span id="LongParameter">A-A delay</span>
+                </div>
+    	    </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" id="header">Ventricle - Ventricle dyssynchrony</div>
+            <div>
+                <span id="LongParameter" >Interventricular mechanical delay:</span><span id="IVMDvalue"></span><span id="s">s</span>
+            </div>
+            <div>
+                <input type="checkbox" id="PSM"><span id="LongParameter">Paradoxical septal motion</span>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" id="header">Timing</div>
+            <div>
+            <span id="tags">Left ventricle:</span>
+            <span id="tags">Right ventricle:</span>
+            </div>
+        <div>
+            <a href="#" class="btn btn-danger btn-sm"  id="AVO">AVO</a>
+            <span id="DistanceAVO" ></span><span id="s">s</span>
+            <a href="#" class="btn btn-danger btn-sm"  id="PVO">PVO</a>
+            <span id="DistancePVO" ></span><span id="s">s</span>
+        </div>
+        <div>
+            <a href="#" class="btn btn-primary btn-sm"  id="AVC">AVC</a>
+            <span id="DistanceAVC" ></span><span id="s">s</span>
+            <a href="#" class="btn btn-primary btn-sm"  id="PVC">PVC</a>
+            <span id="DistancePVC" ></span><span id="s">s</span>
+        </div>
+        <div>
+            <a href="#" class="btn btn-info btn-sm"  id="MVO">MVO</a>
+            <span id="DistanceMVO" ></span><span id="s">s</span>
+            <a href="#" class="btn btn-info btn-sm"  id="TVO">TVO</a>
+            <span id="DistanceTVO" ></span><span id="s">s</span>
+        </div>
+        <div>
+            <a href="#" class="btn btn-warning btn-sm"  id="MVC">MVC</a>
+            <span id="DistanceMVC" ></span><span id="s">s</span>
+            <a href="#" class="btn btn-warning btn-sm"  id="TVC">TVC</a>
+            <span id="DistanceTVC" ></span><span id="s">s</span>
+        </div>
+        <div>
+            <a href="#" class="btn btn-default btn-sm"  id="LAWs">LAWs</a>
+            <span id="DistanceLAWs" ></span><span id="s">s</span>
+            <a href="#" class="btn btn-default btn-sm"  id="RAWs">RAWs</a>
+            <span id="DistanceRAWs" ></span><span id="s">s</span>
+        </div>
+        <div>
+            <a href="#" class="btn btn-success btn-sm"  id="LAWc">LAWc</a>
+            <span id="DistanceLAWc" ></span><span id="s">s</span>
+            <a href="#" class="btn btn-success btn-sm"  id="RAWc">RAWc</a>
+            <span id="DistanceRAWc" ></span><span id="s">s</span>
+        </div>
+        <div>
+            <span id="Parameter" >R-R:</span><span id="AverageRR"></span><span id="s">s</span>
+        </div>
+        <div>
+            <span id="Parameter" >IVCT:</span><span id="IVCTvalue"></span><span id="s">s</span>
+            <span id="Parameter" >IVRT:</span><span id="IVRTvalue"></span><span id="s">s</span>
+        </div>
+        <div>
+            <span id="Parameter" >LVET:</span><span id="LVETvalue"></span><span id="s">s</span>
+            <span id="Parameter" >LVFT:</span><span id="LVFTvalue"></span><span id="s">s</span>
+        </div>
+        </div>
+        <div class="panel panel-default" id="inputPanel">
+            <div class="panel-heading" id="header">Functional mechanism</div>
+            <div>
+                <span id="tags">Left ventricle:</span>
+                <span id="tags">Right ventricle:</span>
+            </div>
+            <div>
+                <span id="inputParameter" >DPDT:</span><input class="form-control input-sm" type="text" id="lvDPDT"><span id="s">s</span>
+                <span id="inputParameter" >DPDT:</span><input class="form-control input-sm" type="text" id="rvDPDT"><span id="s">s</span>
+            </div>
+            <div>
+                <span id="inputParameter" >ESV:</span><input class="form-control input-sm" type="text" id="lvESV"><span id="s">s</span>
+                <span id="inputParameter" >ESV:</span><input class="form-control input-sm" type="text" id="rvESV"><span id="s">s</span>
+            </div>
+            <div>
+                <span id="inputParameter" >EDV:</span><input class="form-control input-sm" type="text" id="lvEDV"><span id="s">s</span>
+                <span id="inputParameter" >EDV:</span><input class="form-control input-sm" type="text" id="rvEDV"><span id="s">s</span>
+            </div>
+            <div>
+                <span id="inputParameter" >EF:</span><input class="form-control input-sm" type="text" id="lvEF"><span id="s">s</span>
+                <span id="inputParameter" >EF:</span><input class="form-control input-sm" type="text" id="rvEF"><span id="s">s</span>
+            </div>
+            <div>
+                <span id="inputParameter" >PAP:</span><input class="form-control input-sm" type="text" id="PAP"><span id="s">s</span>
+            </div>
+        </div>
+        <div>
+            <a href='#' id="export" class="btn btn-default export">Export a report</a>
+        </div>
+    </div>
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/cornerstone.min.js"></script>
+    <script src="libs/cornerstoneMath.js"></script>
+    <script src="libs/cornerstoneTools.js"></script>
+    <script src="libs/dicomParser.js"></script>
+    <script src="libs/cornerstone.js"></script>
+    <script src="libs/cornerstoneWADOImageLoader.js"></script>
+    <script src="libs/touch-emulator.js"></script>
+    <script src="libs/hammer.min.js"></script>
+    
+    <!-- @CYM Our lybraries -->
+    <script src="libs/customFreeHandRoi.js"></script>
+    <script src="libs/tool_viewerSynchronizer.js"></script>
+    <script src="libs/viewer.js"></script>
+    <script src="libs/cineViewer.js"></script>
+
+<script>
+$("#MitralFillingSelect").on('change', function(){
+    if($("#MitralFillingSelect").val() == "Normal") {
+        $("#Checkboxes div.CheckBoxContainer").hide();
+    } else if($("#MitralFillingSelect").val() == "Long AV") {
+        $("#Checkboxes div.CheckBoxContainer").hide();
+        $("#Checkboxes div.CheckBoxContainerLong").show();
+    }  else if($("#MitralFillingSelect").val() == "Short AV") {
+        $("#Checkboxes div.CheckBoxContainer").hide();
+        $("#Checkboxes div.CheckBoxContainerShort").show();
+    } else {
+
+    }
+})
+</script>
+
+    <script>
+        
+        cornerstoneWADOImageLoader.configure({
+        beforeSend: function(xhr) {
+            // Add custom headers here (e.g. auth tokens)
+            //xhr.setRequestHeader('x-auth-token', 'my auth token');
+        }
+    });
+
+        
+        
+
+        $(document).ready(function() {
+
+            function CSV() {
+                var result = "";
+
+                if ($('#TMDvalue').text().trim().length) {
+                    result += "Tricuspid mitral difference," + $('#TMDvalue').text() + "\n";
+                }
+
+                if($("#MitralFillingSelect").val() == "Normal") {
+                    result += "Pattern of mitral filling,normal\n";
+                } else if($("#MitralFillingSelect").val() == "Long AV") {
+                    result += "Pattern of mitral filling,long AV\n";
+                    if (document.getElementById('FEA').checked) {
+                        result += "Fused E-A,yes\n";
+                    }
+                    if (document.getElementById('NFEA').checked) {
+                        result += "Non-fused E-A,yes\n";
+                    }
+                    if (document.getElementById('PSMR').checked) {
+                        result += "Pre-systolic MR,yes\n";
+                    }
+                }  else if($("#MitralFillingSelect").val() == "Short AV") {
+                    result += "Pattern of mitral filling,short AV\n";
+                    if (document.getElementById('TAW').checked) {
+                        result += "Truncated A Wave,yes\n";
+                    }
+                    if (document.getElementById('A-A').checked) {
+                        result += "A-A delay,yes\n";
+                    }
+                } else {}
+
+                if ($('#IVMDvalue').text().trim().length) {
+                    result += "Interentricular mechanical delay," + $('#IVMDvalue').text() + "\n";
+                }
+
+                if (document.getElementById('PSM').checked) {
+                    result += "Paradoxical septal motion,yes\n";
+                }
+
+                if ($('#DistanceAVO').text().trim().length) {
+                    result += "AVO," + $('#DistanceAVO').text() + "\n";
+                }
+
+                if ($('#DistancePVO').text().trim().length) {
+                    result += "PVO," + $('#DistancePVO').text() + "\n";
+                }
+
+                if ($('#DistanceAVC').text().trim().length) {
+                    result += "AVC," + $('#DistanceAVC').text() + "\n";
+                }
+
+                if ($('#DistancePVC').text().trim().length) {
+                    result += "PVC," + $('#DistancePVC').text() + "\n";
+                }
+
+                if ($('#DistanceMVO').text().trim().length) {
+                    result += "MVO," + $('#DistanceMVO').text() + "\n";
+                }
+
+                if ($('#DistanceTVO').text().trim().length) {
+                    result += "TVO," + $('#DistanceTVO').text() + "\n";
+                }
+
+                if ($('#DistanceMVC').text().trim().length) {
+                    result += "MVC," + $('#DistanceMVC').text() + "\n";
+                }
+
+                if ($('#DistanceTVC').text().trim().length) {
+                    result += "TVC," + $('#DistanceTVC').text() + "\n";
+                }
+
+                if ($('#DistanceLAWs').text().trim().length) {
+                    result += "LAWs," + $('#DistanceLAWs').text() + "\n";
+                }
+
+                if ($('#DistanceRAWs').text().trim().length) {
+                    result += "RAWs," + $('#DistanceRAWs').text() + "\n";
+                }
+                
+                if ($('#DistanceLAWc').text().trim().length) {
+                    result += "LAWc," + $('#DistanceLAWc').text() + "\n";
+                }
+
+                if ($('#DistanceRAWc').text().trim().length) {
+                    result += "RAWc," + $('#DistanceRAWc').text() + "\n";
+                }
+
+                if ($('#AverageRR').text().trim().length) {
+                    result += "R-R," + $('#AverageRR').text() + "\n";
+                }
+
+                if ($('#IVCTvalue').text().trim().length) {
+                    result += "IVCT," + $('#IVCTvalue').text() + "\n";
+                }
+
+                if ($('#IVRTvalue').text().trim().length) {
+                    result += "IVRT," + $('#IVRTvalue').text() + "\n";
+                }
+
+                if ($('#LVETvalue').text().trim().length) {
+                    result += "LVET," + $('#LVETvalue').text() + "\n";
+                }
+
+                if ($('#LVFTvalue').text().trim().length) {
+                    result += "LVFT," + $('#LVFTvalue').text() + "\n";
+                }
+
+                if ($('#lvDPDT').val()) {
+                    result += "Left ventricle DPDT," + $('#lvDPDT').val() + "\n";
+                }
+                if ($('#rvDPDT').val()) {
+                    result += "Right ventricle DPDT," + $('#rvDPDT').val() + "\n";
+                }
+
+                if ($('#lvESV').val()) {
+                    result += "Left ventricle ESV," + $('#lvESV').val() + "\n";
+                }
+                if ($('#rvESV').val()) {
+                    result += "Right ventricle ESV," + $('#rvESV').val() + "\n";
+                }
+
+                if ($('#lvEDV').val()) {
+                    result += "Left ventricle EDV," + $('#lvEDV').val() + "\n";
+                }
+                if ($('#rvEDV').val()) {
+                    result += "Right ventricle EDV," + $('#rvEDV').val() + "\n";
+                }
+
+                if ($('#lvEF').val()) {
+                    result += "Left ventricle EF," + $('#lvEF').val() + "\n";
+                }
+                if ($('#rvEF').val()) {
+                    result += "Right ventricle EF," + $('#rvEF').val() + "\n";
+                }
+
+                if ($('#PAP').val()) {
+                    result += "PAP," + $('#PAP').val() + "\n";
+                }
+                return result;
+            }
+
+            function exportTableToCSV(filename) {
+                var csv = CSV();
+                if (csv == null) return;
+
+                    // Data URI
+                    csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+
+                $(this)
+                    .attr({
+                    'download': filename,
+                        'href': csvData,
+                        'target': '_blank'
+                });
+            }
+
+            // This must be a hyperlink
+            $(".export").on('click', function (event) {
+                // CSV
+                exportTableToCSV.call(this, 'report.csv');
+
+                // IF CSV, don't do event.preventDefault() or return false
+                // We actually need this to be a typical hyperlink
+            });
+            
+
+        $("#selectFile").on('change', function(e) {
+            // Add the file to the cornerstoneFileImageLoader and get unique
+            // text for that file
+            var files = e.target.files;
+            for (i=0;i < files.length;i++) {
+                if (files[i].name == "calibration.json") {
+                    var calibrationFile = files[i];
+                }
+            }
+            
+            var viewer1, viewer2, viewer3, viewer4, viewer5, viewer6, cineViewer1, cineViewer2;
+            var viewerSynchronizerRV = new ViewerSynchronizer();
+            var viewerSynchronizerLV = new ViewerSynchronizer();
+            
+            var reader1 = new FileReader();
+            reader1.readAsText(calibrationFile);
+            reader1.onload = function(e) {
+                var lines;
+                var text=reader1.result;
+                var jsonOBJ = JSON.parse(text);
+                for (i=0;i < files.length;i++) {
+                    for (j=0;j < jsonOBJ.images.length;j++) {
+                        if (jsonOBJ.images[j].path == files[i].name) {
+                            var elementName = "#"+jsonOBJ.images[j].type;
+                            elementName = elementName.replace(/\s/g, '');
+                            var element = $(elementName).get(0);
+                            var imageId = cornerstoneWADOImageLoader.fileManager.add(files[i]);
+                            
+                            switch (elementName.substr(1)) {
+                                case "Aorticvalve":
+                                    viewer1 = new Viewer("Aorticvalve",element,imageId);
+                                    viewerSynchronizerRV.addViewer(viewer1);
+                                    break;
+                                case "Mitralvalve-PWDoppler":
+                                    viewer2 = new Viewer("Mitralvalve-PWDoppler",element,imageId);
+                                    viewerSynchronizerRV.addViewer(viewer2);
+                                    break;
+                                case "Mitralvalve-CWDoppler":
+                                    viewer3 = new Viewer("Mitralvalve-CWDoppler",element,imageId);
+                                    viewerSynchronizerRV.addViewer(viewer3);
+                                    break;
+                                case "Pulmonaryvalve":
+                                    viewer4 = new Viewer("Pulmonaryvalve",element,imageId);
+                                    viewerSynchronizerLV.addViewer(viewer4);
+                                    break;
+                                case "Tricuspid-PWDoppler":
+                                    viewer5 = new Viewer("Tricuspid-PWDoppler",element,imageId);
+                                    viewerSynchronizerLV.addViewer(viewer5);
+                                    break;
+                                case "Tricuspid-CWDoppler":
+                                    viewer6 = new Viewer("Tricuspid-CWDoppler",element,imageId);
+                                    viewerSynchronizerLV.addViewer(viewer6);
+                                    break;
+                                case "Apicalview-4Chambers":
+                                    cineViewer1 = new CineViewer("Apicalview-4Chambers",element,imageId,files[i]);
+                                    break;
+                                case "Shortaxis":
+                                    cineViewer2 = new CineViewer("Shortaxis",element,imageId,files[i]);
+                                    break;
+                            }
+                        }
+                        
+                    }
+                }
+                
+                function printDistances(viewer) {
+                    setTimeout(function() {
+                            $( "#"+viewer.getViewerName() ).mousemove(printDistancesOnMouseMove);
+                            printDistancesOnMouseMove();
+                        }, 150);
+                }
+                
+                function printDistancesOnMouseMove( event ) {
+                                lines = cornerstoneTools.customFreehand.getLines();
+                                if (lines["AVO"]) {
+                                    if (lines["AVO"][0].x) {
+                                        var AVO = Math.abs(jsonOBJ.images[0].timeRange * (lines["AVO"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceAVO).text(AVO.toFixed(5));
+                                    }
+                                }
+                                if (lines["AVC"]) {
+                                    if (lines["AVC"][0].x) {
+                                        var AVC = Math.abs(jsonOBJ.images[0].timeRange * (lines["AVC"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceAVC).text(AVC.toFixed(5));
+                                    }
+                                }
+                                if (lines["MVO"]) {
+                                    if (lines["MVO"][0].x) {
+                                        var MVO = Math.abs(jsonOBJ.images[0].timeRange * (lines["MVO"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceMVO).text(MVO.toFixed(5));
+                                    }
+                                }
+                                if (lines["MVC"]) {
+                                    if (lines["MVC"][0].x) {
+                                        var MVC = Math.abs(jsonOBJ.images[0].timeRange * (lines["MVC"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceMVC).text(MVC.toFixed(5));
+                                    }
+                                }
+                                if (lines["LAWs"]) {
+                                    if (lines["LAWs"][0].x) {
+                                        var LAWs = Math.abs(jsonOBJ.images[0].timeRange * (lines["LAWs"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceLAWs).text(LAWs.toFixed(5));
+                                    }
+                                }
+                                if (lines["LAWc"]) {
+                                    if (lines["LAWc"][0].x) {
+                                        var LAWc = Math.abs(jsonOBJ.images[0].timeRange * (lines["LAWc"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceLAWc).text(LAWc.toFixed(5));
+                                    }
+                                }
+                                if (lines["PVO"]) {
+                                    if (lines["PVO"][0].x) {
+                                        var PVO = Math.abs(jsonOBJ.images[0].timeRange * (lines["PVO"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistancePVO).text(PVO.toFixed(5));
+                                    }
+                                }
+                                if (lines["PVC"]) {
+                                    if (lines["PVC"][0].x) {
+                                        var PVC = Math.abs(jsonOBJ.images[0].timeRange * (lines["PVC"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistancePVC).text(PVC.toFixed(5));
+                                    }
+                                }
+                                if (lines["TVO"]) {
+                                    if (lines["TVO"][0].x) {
+                                        var TVO = Math.abs(jsonOBJ.images[0].timeRange * (lines["TVO"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceTVO).text(TVO.toFixed(5));
+                                    }
+                                }
+                                if (lines["TVC"]) {
+                                    if (lines["TVC"][0].x) {
+                                        var TVC = Math.abs(jsonOBJ.images[0].timeRange * (lines["TVC"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceTVC).text(TVC.toFixed(5));
+                                    }
+                                }
+                                if (lines["RAWs"]) {
+                                    if (lines["RAWs"][0].x) {
+                                        var RAWs = Math.abs(jsonOBJ.images[0].timeRange * (lines["RAWs"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceRAWs).text(RAWs.toFixed(5));
+                                    }
+                                }
+                                if (lines["RAWc"]) {
+                                    if (lines["RAWc"][0].x) {
+                                        var RAWc = Math.abs(jsonOBJ.images[0].timeRange * (lines["RAWc"][0].x - jsonOBJ.images[0].QRSONSET1PROCESSED));
+                                        $(DistanceRAWc).text(RAWc.toFixed(5));
+                                    }
+                                }
+                                var sumRR = 0;
+                                for (i=0;i < jsonOBJ.images.length;i++) {
+                                    sumRR += Number(jsonOBJ.images[i].RR);
+                                }
+                                var RR = sumRR / jsonOBJ.images.length;
+                                $(AverageRR).text(RR.toFixed(5));
+                                if (MVC && AVO) {
+                                    if (MVC < RR) {
+                                        var IVCT = Math.abs(AVO - MVC);
+                                        $(IVCTvalue).text(IVCT.toFixed(5));
+                                    } else {
+                                        var IVCT = Math.abs(AVO - (MVC - RR));
+                                        $(IVCTvalue).text(IVCT.toFixed(5));
+                                    }
+                                }
+                                if (AVC && MVO) {
+                                    if (AVC < RR) {
+                                        var IVRT = Math.abs(AVC - MVO);
+                                        $(IVRTvalue).text(IVRT.toFixed(5));
+                                    } else {
+                                        var IVRT = Math.abs(MVO - (AVC - RR));
+                                        $(IVRTvalue).text(IVRT.toFixed(5));
+                                    }
+                                }
+                                if (AVC && AVO) {
+                                    if (AVC < RR) {
+                                        var LVET = Math.abs(AVC - AVO);
+                                        $(LVETvalue).text(LVET.toFixed(5));
+                                    } else {
+                                        var LVET = Math.abs(AVO - (AVC - RR));
+                                        $(LVETvalue).text(LVET.toFixed(5));
+                                    }
+                                }
+                                if (MVC && MVO) {
+                                    if (MVC < RR) {
+                                        var LVFT = Math.abs(MVC - MVO);
+                                        $(LVFTvalue).text(LVFT.toFixed(5));
+                                    } else {
+                                        var LVFT = Math.abs(MVO - (MVC - RR));
+                                        $(LVFTvalue).text(LVFT.toFixed(5));
+                                    }
+                                }
+                                if (AVO && PVO) {
+                                    var IVMD = Math.abs(AVO - PVO);
+                                    $(IVMDvalue).text(IVMD.toFixed(5));
+                                }
+                                if (LAWs && RAWs) {
+                                    var TMD = Math.abs(LAWs - RAWs);
+                                    $(TMDvalue).text(TMD.toFixed(5));
+                                }
+                            }
+                
+                viewer1.loadImage(function(elementImageLoaded){
+                
+                        $('#AVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"AVO","#ff0000",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#AVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"AVC","#00BFFF",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#MVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"MVO","#800080",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#MVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"MVC","#ffA500",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+
+                        $('#LAWs').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"LAWs","#FFF8DC",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+
+                        $('#LAWc').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"LAWc","#00FF00",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+                        
+                        printDistances(viewer1);
+                 });
+                 
+                 viewer2.loadImage(function(elementImageLoaded){
+                
+                        $('#AVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"AVO","#ff0000",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#AVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"AVC","#00BFFF",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#MVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"MVO","#800080",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#MVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"MVC","#ffA500",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+
+                        $('#LAWs').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"LAWs","#FFF8DC",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+
+                        $('#LAWc').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"LAWc","#00FF00",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+                        
+                        printDistances(viewer2);
+                 });
+                 
+                 viewer3.loadImage(function(elementImageLoaded){
+                
+                        $('#AVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"AVO","#ff0000",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#AVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"AVC","#00BFFF",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#MVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"MVO","#800080",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+        
+                        $('#MVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"MVC","#ffA500",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+
+                        $('#LAWs').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"LAWs","#FFF8DC",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+
+                        $('#LAWc').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"LAWc","#00FF00",viewerSynchronizerRV);
+                            updateVisual();
+                        });
+                        
+                        printDistances(viewer3);
+                 });
+                
+                viewer4.loadImage(function(elementImageLoaded){
+                
+                        $('#PVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"PVO","#ff0000",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#PVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"PVC","#00BFFF",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#TVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"TVO","#800080",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#TVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"TVC","#ffA500",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+
+                        $('#RAWs').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"RAWs","#FFF8DC",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+
+                        $('#RAWc').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"RAWc","#00FF00",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+                        
+                        printDistances(viewer4);
+                 });
+                 
+                 viewer5.loadImage(function(elementImageLoaded){
+                
+                        $('#PVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"PVO","#ff0000",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#PVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"PVC","#00BFFF",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#TVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"TVO","#800080",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#TVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"TVC","#ffA500",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+
+                        $('#RAWs').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"RAWs","#FFF8DC",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+
+                        $('#RAWc').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"RAWc","#00FF00",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+                        
+                        printDistances(viewer5);
+                 });
+                 
+                 viewer6.loadImage(function(elementImageLoaded){
+                
+                        $('#PVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"PVO","#ff0000",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#PVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"PVC","#00BFFF",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#TVO').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"TVO","#800080",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+        
+                        $('#TVC').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"TVC","#ffA500",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+
+                        $('#RAWs').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"RAWs","#FFF8DC",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+
+                        $('#RAWc').click(function(){
+                            cornerstoneTools.customFreehand.addLine(elementImageLoaded,1,0,"RAWc","#00FF00",viewerSynchronizerLV);
+                            updateVisual();
+                        });
+
+                        printDistances(viewer6);
+                        
+                 });
+                 
+                 function updateVisual() {
+                    cornerstoneTools.customFreehand.updatePlugin(element_1);
+                    cornerstoneTools.customFreehand.updatePlugin(element_2);
+                    cornerstoneTools.customFreehand.updatePlugin(element_3);
+                    cornerstoneTools.customFreehand.updatePlugin(element_4);
+                    cornerstoneTools.customFreehand.updatePlugin(element_5);
+                    cornerstoneTools.customFreehand.updatePlugin(element_6);
+                }
+                
+                /********ONSETS ********/
+                var element_1 = viewer1.getElement();
+                var element_2 = viewer2.getElement();
+                var element_3 = viewer3.getElement();
+                var element_4 = viewer4.getElement();
+                var element_5 = viewer5.getElement();
+                var element_6 = viewer6.getElement();
+                
+                
+                setTimeout(function() {
+                    cornerstoneTools.customFreehand.addLine(element_1,1,jsonOBJ.images[0].QRSONSET1PROCESSED,"RVonset1","#FFFF00",viewerSynchronizerRV,true);
+                    cornerstoneTools.customFreehand.addLine(element_1,1,jsonOBJ.images[0].QRSONSET2PROCESSED,"RVonset2","#FFFF00",viewerSynchronizerRV,true);
+                    cornerstoneTools.customFreehand.addLine(element_2,1,jsonOBJ.images[1].QRSONSET1PROCESSED,"RVonset1","#FFFF00",viewerSynchronizerRV,true);
+                    cornerstoneTools.customFreehand.addLine(element_2,1,jsonOBJ.images[1].QRSONSET2PROCESSED,"RVonset2","#FFFF00",viewerSynchronizerRV,true);
+                    cornerstoneTools.customFreehand.addLine(element_3,1,jsonOBJ.images[2].QRSONSET1PROCESSED,"RVonset1","#FFFF00",viewerSynchronizerRV,true);
+                    cornerstoneTools.customFreehand.addLine(element_3,1,jsonOBJ.images[2].QRSONSET2PROCESSED,"RVonset2","#FFFF00",viewerSynchronizerRV,true);
+                    cornerstoneTools.customFreehand.addLine(element_4,1,jsonOBJ.images[3].QRSONSET1PROCESSED,"LVonset1","#FFFF00",viewerSynchronizerLV,true);
+                    cornerstoneTools.customFreehand.addLine(element_4,1,jsonOBJ.images[3].QRSONSET2PROCESSED,"LVonset2","#FFFF00",viewerSynchronizerLV,true);
+                    cornerstoneTools.customFreehand.addLine(element_5,1,jsonOBJ.images[4].QRSONSET1PROCESSED,"LVonset1","#FFFF00",viewerSynchronizerLV,true);
+                    cornerstoneTools.customFreehand.addLine(element_5,1,jsonOBJ.images[4].QRSONSET2PROCESSED,"LVonset2","#FFFF00",viewerSynchronizerLV,true);
+                    cornerstoneTools.customFreehand.addLine(element_6,1,jsonOBJ.images[5].QRSONSET1PROCESSED,"LVonset1","#FFFF00",viewerSynchronizerLV,true);
+                    cornerstoneTools.customFreehand.addLine(element_6,1,jsonOBJ.images[5].QRSONSET2PROCESSED,"LVonset2","#FFFF00",viewerSynchronizerLV,true);
+                    updateVisual();
+                }, 300);
+                }
+                
+                setTimeout(function() {
+                var reader2 = new FileReader();
+                reader2.onload = function(e) {
+                    var arrayBuffer = reader2.result;
+                    cineViewer1.loadImage(arrayBuffer,'slice-range1',function(elementImageLoaded){
+                        
+                    function activate(id)
+                    {
+                        $('a').removeClass('active');
+                        $(id).addClass('active');
+                    }
+                        
+                    $('#playClip1').click(function() {
+                        activate("#playClip1");
+                        cornerstoneTools.playClip(elementImageLoaded, 40);
+                        return false;
+                    });
+                    $('#stopClip1').click(function() {
+                        activate("#stopClip1");
+                        cornerstoneTools.stopClip(elementImageLoaded);
+                        return false;
+                    });
+                });
+                
+                }
+                reader2.readAsArrayBuffer(cineViewer1.getFile());
+                
+                var reader3 = new FileReader();
+                reader3.onload = function(e) {
+                    var arrayBuffer = reader3.result;
+                    cineViewer2.loadImage(arrayBuffer,'slice-range2',function(elementImageLoaded){
+                        
+                    function activate(id)
+                    {
+                        $('a').removeClass('active');
+                        $(id).addClass('active');
+                    }
+                        
+                    $('#playClip2').click(function() {
+                        activate("#playClip2");
+                        cornerstoneTools.playClip(elementImageLoaded, 40);
+                        return false;
+                    });
+                    $('#stopClip2').click(function() {
+                        activate("#stopClip2");
+                        cornerstoneTools.stopClip(elementImageLoaded);
+                        return false;
+                    });
+                });
+                
+                }
+                reader3.readAsArrayBuffer(cineViewer2.getFile());
+            }, 100);
+        });
+        
+        
+    });
+    </script>
+</body>
+
+
+
+</html>
